@@ -16,7 +16,7 @@ class TruckManagement:
 
     def load_data(self):
         try:
-            with open("dump.json", "r") as file:
+            with open("dumps.json", "r") as file:
                 data = json.load(file)
                 for item in data:
                     truck = Truck(item["id"], item["name"], item["driver"], item["state_name"])
@@ -29,5 +29,6 @@ class TruckManagement:
 class Main:
     while True:
         if TruckManagement:
+            TruckManagement().load_data()
             print('Work')
             break
