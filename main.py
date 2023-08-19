@@ -16,7 +16,7 @@ class TruckManagement:
 
     def load_data(self):
         try:
-            with open("dumps.json", "r") as file:
+            with open("dump.json", "r") as file:
                 data = json.load(file)
                 for item in data:
                     truck = Truck(item["id"], item["name"], item["driver"], item["state_name"])
@@ -25,10 +25,28 @@ class TruckManagement:
             print("Файл не найден. Создайте файл trucks.json с данными.")
 
 
+    def show_truck_info(self, truck):
+        print(f"{'='*15}\n{truck.id}| {truck.name}| {truck.driver} | {truck.state_name}\n{'='*15}")
 
-class Main:
-    while True:
-        if TruckManagement:
-            TruckManagement().load_data()
-            print('Work')
-            break
+
+    def main_menu(self):
+        while True:
+            print("Меню:\n1\tОтобразить текущее состояние грузовиков\n2\tПоказать данные грузовика по id")
+            choice = input("Выберите действие: ")
+
+            if choice == "1":
+                print('№ | Грузовик| Водитель  | Состояние ')
+                for truck in self.trucks:
+                    self.show_truck_info(truck)
+            elif choice == "2":
+                truck_id = int(input("Введите номер грузовика: "))
+                truck = next((t for t in self.trucks if t.id == truck_id), None)
+                if truck:
+                    self.show_truck_info(truck)
+                else:
+                    print("Грузовик с таким номером не найден.")
+
+
+
+
+TruckManagement().main_menu()
